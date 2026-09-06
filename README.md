@@ -223,15 +223,75 @@ The **Índice** application is now ready to use.
 ## Team <a id="team"></a>
 
 <div align="center">
-
-| Name | Role | Networking | Identification |
-|---|---|---|---|
-| Alexander Lima | Dev Team | [![Linkedin](https://img.shields.io/badge/Linkedin-blue?logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/alexander-silva-lima-96a0432a6/) [![GitHub](https://img.shields.io/badge/GitHub-111217?logo=github&logoColor=white)](https://github.com/netizenhub) | <img src="./assets/Foto - Alexander.jpeg" width="60"> |
-| Augusto Piatto | Dev Team | [![Linkedin](https://img.shields.io/badge/Linkedin-blue?logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/augusto-piatto/) [![GitHub](https://img.shields.io/badge/GitHub-111217?logo=github&logoColor=white)](https://github.com/augustopiatto) | <img src="./assets/Foto - Augusto.jpeg" width="60"> |
-| Davi Soares | Dev Team | [![Linkedin](https://img.shields.io/badge/Linkedin-blue?logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/dsf21/) [![GitHub](https://img.shields.io/badge/GitHub-111217?logo=github&logoColor=white)](https://github.com/DaviSFS21) | <img src="./assets/Foto - Davi.jpeg" width="60"> |
-| Isabelly Rodrigues | Product Owner | [![Linkedin](https://img.shields.io/badge/Linkedin-blue?logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/isabelly-rdgs/) [![GitHub](https://img.shields.io/badge/GitHub-111217?logo=github&logoColor=white)](https://github.com/61isabelly) | <img src="./assets/Foto - Isabelly.jpeg" width="60"> |
-| João Bispo | Dev Team | [![Linkedin](https://img.shields.io/badge/Linkedin-blue?logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/jo%C3%A3o-pedro-563369181/) [![GitHub](https://img.shields.io/badge/GitHub-111217?logo=github&logoColor=white)](https://github.com/BispoJPM) | <img src="./assets/Foto - Joao.jpeg" width="60"> |
-| Luiz Ferreira | Dev Team | [![Linkedin](https://img.shields.io/badge/Linkedin-blue?logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/luiz-henrique-rabello-ferreira-3600752ba/) [![GitHub](https://img.shields.io/badge/GitHub-111217?logo=github&logoColor=white)](https://github.com/LuizHRFerreira) | <img src="./assets/Foto - Luiz.jpeg" width="60"> |
-| Tiago Reis | Scrum Master | [![Linkedin](https://img.shields.io/badge/Linkedin-blue?logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/tiago-torres-dos-reis/) [![GitHub](https://img.shields.io/badge/GitHub-111217?logo=github&logoColor=white)](https://github.com/TiagoTReis) | <img src="./assets/Foto - Tiago Reis.jpeg" width="60"> |
-
+  <table>
+    <tr>
+      <th>Identification</th>
+      <th>Name</th>
+      <th>Role</th>
+      <th>Networking</th>
+    </tr>
+    <tr>
+      <td align="center"><img src="./assets/Foto - Alexander.png" width="120" height="120"></td>
+      <td><b>Alexander Lima</b></td>
+      <td>Dev Team</td>
+      <td align="center">
+        <a href="https://www.linkedin.com/in/alexander-silva-lima-96a0432a6/"><img src="https://img.shields.io/badge/Linkedin-blue?logo=Linkedin&logoColor=white" height="200"></a><br>
+        <a href="https://github.com/netizenhub"><img src="https://img.shields.io/badge/GitHub-111217?logo=github&logoColor=white" height="200"></a>
+      </td>
+    </tr>
+    <tr>
+      <td align="center"><img src="./assets/Foto - Augusto.jpeg" width="120" height="120"></td>
+      <td><b>Augusto Piatto</b></td>
+      <td>Dev Team</td>
+      <td align="center">
+        <a href="https://www.linkedin.com/in/augusto-piatto/"><img src="https://img.shields.io/badge/Linkedin-blue?logo=Linkedin&logoColor=white" height="200"></a><br>
+        <a href="https://github.com/augustopiatto"><img src="https://img.shields.io/badge/GitHub-111217?logo=github&logoColor=white" height="200"></a>
+      </td>
+    </tr>
+    <tr>
+      <td align="center"><img src="./assets/Foto - Davi.jpeg" width="120" height="120"></td>
+      <td><b>Davi Soares</b></td>
+      <td>Dev Team</td>
+      <td align="center">
+        <a href="https://www.linkedin.com/in/dsf21/"><img src="https://img.shields.io/badge/Linkedin-blue?logo=Linkedin&logoColor=white" height="200"></a><br>
+        <a href="https://github.com/DaviSFS21"><img src="https://img.shields.io/badge/GitHub-111217?logo=github&logoColor=white" height="200"></a>
+      </td>
+    </tr>
+    <tr>
+      <td align="center"><img src="./assets/Foto - Isabelly.png" width="120" height="120"></td>
+      <td><b>Isabelly Rodrigues</b></td>
+      <td>Product Owner</td>
+      <td align="center">
+        <a href="https://www.linkedin.com/in/isabelly-rdgs/"><img src="https://img.shields.io/badge/Linkedin-blue?logo=Linkedin&logoColor=white" height="200"></a><br>
+        <a href="https://github.com/61isabelly"><img src="https://img.shields.io/badge/GitHub-111217?logo=github&logoColor=white" height="200"></a>
+      </td>
+    </tr>
+    <tr>
+      <td align="center"><img src="./assets/Foto - Joao.jpeg" width="120" height="120"></td>
+      <td><b>João Bispo</b></td>
+      <td>Dev Team</td>
+      <td align="center">
+        <a href="https://www.linkedin.com/in/jo%C3%A3o-pedro-563369181/"><img src="https://img.shields.io/badge/Linkedin-blue?logo=Linkedin&logoColor=white" height="200"></a><br>
+        <a href="https://github.com/BispoJPM"><img src="https://img.shields.io/badge/GitHub-111217?logo=github&logoColor=white" height="200"></a>
+      </td>
+    </tr>
+    <tr>
+      <td align="center"><img src="./assets/Foto - Luiz.png" width="120" height="120"></td>
+      <td><b>Luiz Ferreira</b></td>
+      <td>Dev Team</td>
+      <td align="center">
+        <a href="https://www.linkedin.com/in/luiz-henrique-rabello-ferreira-3600752ba/"><img src="https://img.shields.io/badge/Linkedin-blue?logo=Linkedin&logoColor=white" height="200"></a><br>
+        <a href="https://github.com/LuizHRFerreira"><img src="https://img.shields.io/badge/GitHub-111217?logo=github&logoColor=white" height="200"></a>
+      </td>
+    </tr>
+    <tr>
+      <td align="center"><img src="./assets/Foto - Tiago.png" width="120" height="120"></td>
+      <td><b>Tiago Reis</b></td>
+      <td>Scrum Master</td>
+      <td align="center">
+        <a href="https://www.linkedin.com/in/tiago-torres-dos-reis/"><img src="https://img.shields.io/badge/Linkedin-blue?logo=Linkedin&logoColor=white" height="200"></a><br>
+        <a href="https://github.com/TiagoTReis"><img src="https://img.shields.io/badge/GitHub-111217?logo=github&logoColor=white" height="200"></a>
+      </td>
+    </tr>
+  </table>
 </div>
