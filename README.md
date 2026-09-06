@@ -1,17 +1,27 @@
-<p align="center">
-    <h2 align="center">Índice</h2>
-</p>
+<div align="center">
 
-- [Challenge Description](#challenge-description)
-- [Product Backlog](#product-backlog)
-- [Project Evolution Timeline & Sprints](#project-evolution-timeline--sprints)
-- [Technologies Used](#technologies-used)
-- [Project Structure](default)
-- [How to Execute the Project](#how-to-execute-use-and-test-the-project)
-- [DoR and DoD](/documentation/DoR%20&%20DoD/README.md)
-- [User Guide](default)
-- [Installation Guide](default)
-- [Team](#team)
+  <h2>Índice</h2>
+
+  [Challenge Description](#challenge-description) |
+  [Product Backlog](#product-backlog) |
+  [Project Evolution Timeline & Sprints](#project-evolution-timeline--sprints) |
+  [Technologies Used](#technologies-used) |
+  [Project Structure](#project-structure) |
+  [How to Execute the Project](#how-to-execute-use-and-test-the-project) |
+  [DoR and DoD](/documentation/DoR%20&%20DoD/README.md) |
+  [User Guide](#user-guide) |
+  [Installation Guide](#installation-guide) |
+  [Team](#team)
+
+</div>
+
+> **Project Status:** Sprint 1 in Progress
+> 
+> **Sprints Schedule:** 3 Sprints Total
+> 
+> **Documentation Directory:** [Link](./documentation/)
+> 
+> **Project Video:** [YouTube](https://link-do-seu-video.com)
 
 
 ## Challenge Description <a id="challenge-description"></a>
