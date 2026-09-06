@@ -64,9 +64,9 @@ The core challenge consists of optimizing the reading, cross-referencing, and in
 
 | Sprint | Period | Sprint Documentation | Delivered Increment YouTube Video |
 | :---: | :---: | :--- | :--- |
-| **Sprint 1** | 07/09 - 27/09 | [Sprint 1 Documentation](./docs/processo/sprints/sprint-1/README.md) | [YouTube](link_video_sprint_1) |
-| **Sprint 2** | 05/10 - 25/10 | [Sprint 2 Documentation](./docs/processo/sprints/sprint-2/README.md) | [YouTube](link_video_sprint_2) |
-| **Sprint 3** | 02/11 - 22/11 | [Sprint 3 Documentation](./docs/processo/sprints/sprint-3/README.md) | [YouTube](link_video_sprint_3) |
+| **Sprint 1** | 07/09 - 27/09 | [Sprint 1 Documentation](./documentation/process/sprints/sprint-1/README.md) | [YouTube](link_video_sprint_1) |
+| **Sprint 2** | 05/10 - 25/10 | [Sprint 2 Documentation](./documentation/process/sprints/sprint-2/README.md) | [YouTube](link_video_sprint_2) |
+| **Sprint 3** | 02/11 - 22/11 | [Sprint 3 Documentation](./documentation/process/sprints/sprint-3/README.md) | [YouTube](link_video_sprint_3) |
 
 ---
 
