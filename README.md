@@ -59,12 +59,15 @@ The core challenge consists of optimizing the reading, cross-referencing, and in
 
 <br>
 
-
 ## Product Backlog <a id="product-backlog"></a>
 
 | Rank | Priority | User Story / Requirement | Story Points | Sprint | Client Requirement | Status |
 | :---: | :---: | :--- | :---: | :---: | :---: | :---: |
-| -- | -- | *(Base table placeholder for future entries)* | -- | -- | -- | -- |
+| 1 | High | As an employee, I want to upload documents so that I can find all information in a single place. | 5 | 1 | RF2 | Doing |
+| 2 | High | As an employee, I want documents to follow a standard so that I can easily track and identify each one. | 8 | 1 | RF2, RF1 | Doing |
+| 3 | High | As an employee, I want to filter documents by simple criteria so that I can quickly find everything relevant to me. | 5 | 1 | RF1 | Doing |
+| 4 | High | As an employee, I want to view the document in an overview format to better understand and read it. | 2 | 1 | RF2 | Doing |
+| 5 | High | As an employee, I want uploaded documents to be automatically classified so that I do not need to adjust them manually, allowing me to compare and reuse information reliably. | 8 | 1 | RF3 | Doing |
 
 ---
 
