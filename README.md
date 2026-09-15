@@ -76,8 +76,8 @@ To eliminate manual bottlenecks and mitigate compliance risks, our team is devel
 | 3 | High | As an employee, I want to filter documents by simple criteria so that I can quickly find everything relevant to me. | 5 | 1 | RF1 | Doing |
 | 4 | High | As an employee, I want to view the document in an overview format to better understand and read it. | 2 | 1 | RF2 | Doing |
 | 5 | High | As an employee, I want uploaded documents to be automatically classified so that I do not need to adjust them manually, allowing me to compare and reuse information reliably. | 8 | 1 | RF3 | Doing |
-| 6 | Medium | As a technical manager, I want to access document uploads and access requests to ensure integrity, security, and standardization of the repository. | - | 1 | RF2, RF3 | Doing |
-| 7 | Medium | As a technical manager, I want to view how documents are being uploaded and updated to know that everything is working properly. | - | 1 | RF5 | Doing |
+| 6 | Medium | As a technical manager, I want to access document uploads and access requests to ensure integrity, security, and standardization of the repository. | - | 2 | RF2, RF3 | Doing |
+| 7 | Medium | As a technical manager, I want to view how documents are being uploaded and updated to know that everything is working properly. | - | 2 | RF5 | Doing |
 | 8 | Medium | As an employee, I want to search terms and questions within document contents and receive suggestions of excerpts and related documents to quickly reach what is most relevant. | - | 2 | RF1, RF3 | To Do |
 | 9 | Medium | As an employee, I want to receive a simplified summary of the topic I am searching, using retrieved documents, to have an initial guidance before reading in detail. | - | 2 | RF3 | To Do |
 | 10 | Low | As an employee, I want to see document clusters by topic or subject to explore sets of documents without having to organize everything manually. | - | 2 | RF3, RF6 | To Do |
