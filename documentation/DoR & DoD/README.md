@@ -1,3 +1,9 @@
+<div align="center">
+  <img src="../../assets/header%20docs.png" alt="Header Docs">
+</div>
+
+##
+
 # DoR and DoD Checklist <a id="documentation-folder-links"></a>
 
 ### DoR - Definition of Ready
@@ -139,7 +145,7 @@ A Task/User Story is considered completed only when:
 
 | Client Definitions                                                                                                  |
 |---------------------------------------------------------------------------------------------------------------------|
-| The visualization must support the main file formats provided by collaborators.                                     |
+| The visualization must support the main file formats provided by collaborators.                                   |
 
 ---
 
@@ -172,8 +178,6 @@ A Task/User Story is considered completed only when:
 ---
 
 </details>
-</body>
-</html>
 
 <details>
 <summary>Sprint 2</summary>
@@ -184,3 +188,9 @@ default
 <summary>Sprint 3</summary>
 default
 </details>
+
+<br>
+
+<div align="center">
+  <img src="../../assets/footer docs.png" alt="Footer">
+</div>
