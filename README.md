@@ -1,3 +1,5 @@
+
+
 <div align="center">
 
   <h2>Índice</h2>
@@ -49,6 +51,10 @@ To eliminate manual bottlenecks and mitigate compliance risks, our team is devel
 * **Enterprise Governance & Security:** Restricts access through role-based permissions (RBAC), provides in-app permission workflows for sensitive files, blocks unauthorized external data exfiltration, and maintains immutable audit logs in compliance with LGPD standards.
 
 ---
+
+## Trailer
+
+https://github.com/user-attachments/assets/2a06eb25-ee2b-4fcb-8c8f-d411ada0a323
 
 <br>
 
