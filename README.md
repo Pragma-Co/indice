@@ -99,7 +99,7 @@ https://github.com/user-attachments/assets/2a06eb25-ee2b-4fcb-8c8f-d411ada0a323
 
 | Sprint | Period | Sprint Documentation | Delivered Increment YouTube Video |
 | :---: | :---: | :--- | :--- |
-| **Sprint 1** | 07/09 - 27/09 | [Sprint 1 Documentation](./documentation/process/sprints/sprint-1/README.md) | _Soon_ |
+| **Sprint 1** | 07/09 - 27/09 | [Sprint 1 Documentation](./documentation/process/sprints/sprint-1/README.md) | [YouTube](https://youtu.be/s8G6W18gafY?si=BasM1RruVZL65xpM) |
 | **Sprint 2** | 05/10 - 25/10 | [Sprint 2 Documentation](./documentation/process/sprints/sprint-2/README.md) | _Soon_ |
 | **Sprint 3** | 02/11 - 22/11 | [Sprint 3 Documentation](./documentation/process/sprints/sprint-3/README.md) | _Soon_ |
 
