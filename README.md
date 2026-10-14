@@ -20,7 +20,7 @@
 
 </div>
 
-> **Project Status:** Sprint 1 in Progress
+> **Project Status:** Sprint 2 in Progress
 >
 > **Sprints Schedule:** 3 Sprints Total
 >
