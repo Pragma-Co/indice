@@ -1,176 +1,138 @@
-# Classificador de documentos: resultados preliminares
+# Classificador de documentos: resultados
 
 ## Resumo
-Treinamos três classificadores independentes (disciplina, tipo de documento e área) a partir do texto
-dos documentos. Na primeira tentativa, com 133 documentos, o desempenho ficou abaixo do necessário
-(F1 macro de 0,25 a 0,49). A causa principal era a falta de um acervo consolidado e rotulado.
-Para contornar isso, montamos uma nova base a partir do ASSIST QuickSearch, usando os metadados do
-próprio site como rótulos, e fizemos três rodadas de melhoria. Com 478 documentos o F1 macro chegou a
-0,83 (disciplina), 0,72 (tipo) e 0,69 (área). A seção "Comparação das tentativas" resume a evolução.
+O classificador sugere três campos de um documento a partir do texto: disciplina, tipo e área. A versão
+atual (tentativa 4) usa **uma única rede neural** que devolve os três campos de uma vez, treinada sobre
+vetores TF-IDF de 565 documentos públicos do ASSIST QuickSearch, com classes reduzidas (3 disciplinas,
+4 tipos, 3 áreas). Comparada com a linha de base (uma regressão logística por campo, nos mesmos dados e
+na mesma divisão), a rede única ficou com F1 macro médio de **0,840 contra 0,826**, vencendo em
+disciplina e tipo e perdendo em área. A seção "Histórico" resume as tentativas anteriores.
 
-## Tentativa 1: base inicial (133 documentos)
-- 134 documentos coletados, dos quais 133 utilizáveis (um PDF sem texto extraível foi descartado).
-- Rótulos gerados com apoio de um modelo de linguagem (Gemini), porque o time não tem especialistas
-  para classificar os documentos com acurácia.
-- No campo área, usamos apenas a primeira área indicada como principal.
+## Tentativa 4: rede única com classes reduzidas (565 documentos)
 
-| Campo | Distribuição dos documentos |
-|---|---|
-| Disciplina | MAT 58, ELE 27, EST 22, ENS 13, HID 13 |
-| Tipo de documento | ESP 122, NOR 11 |
-| Área | MFG 55, SIS 44, EST 19, QUA 10, CER 5 |
+### Dados
+- Fonte: ASSIST QuickSearch (base pública do Departamento de Defesa dos EUA). Os termos do site permitem a
+  cópia e a distribuição do conteúdo; o EverySpec foi avaliado e descartado porque proíbe download
+  automatizado (`backend/scripts/dataset/README.md`).
+- 565 documentos com texto utilizável (mínimo de 2.000 caracteres, corte em 50.000), uma linha por
+  designação base (revisões do mesmo documento ficam no mesmo conjunto).
+- Classes reduzidas para caber no volume de dados:
 
-Das 8 disciplinas, 7 tipos e 6 áreas do catálogo, a base cobre 5, 2 e 5 classes, respectivamente.
+| Campo | Classes | Origem do rótulo | Distribuição |
+|---|---|---|---|
+| Disciplina | MECHANICAL, ELECTRICAL, MATERIALS | grupo FSC (2 dígitos) dos metadados | 214 / 131 / 220 |
+| Tipo | STANDARD, HANDBOOK, SPECIFICATION, COMMERCIAL_ITEM | categoria do documento nos metadados | 61 / 37 / 362 / 105 |
+| Área | DESIGN, MATERIALS, OTHER_STAGE | IA rotuladora com critérios escritos pelo time | 310 / 201 / 54 |
 
-## Método
-- Pré-processamento: minúsculas, remoção de pontuação e stopwords, lematização.
-- Modelo: TF-IDF (unigramas e bigramas) com regressão logística, um por campo.
-- Divisão estratificada: 106 documentos para treino e 27 para teste (`random_state=42`).
-- Métricas: acurácia e F1 macro (média do F1 de todas as classes com o mesmo peso).
+- A área é a etapa de manufatura a que o documento se refere. A IA rotuladora escolhe entre seis etapas
+  (DESIGN, MATERIALS, PROCESSING, INSPECTION_TEST, PACKAGING_STORAGE, NO_CLEAR_STAGE), com critérios
+  versionados (`area_criteria_v2.md`), temperatura 0 e resposta restrita ao catálogo. As quatro etapas raras
+  (54 documentos, cerca de 10%) foram agrupadas em OTHER_STAGE para o treino; o CSV guarda a etapa fina.
 
-## Resultados
+### Qualidade do rótulo de área
+Os rótulos da IA foram conferidos contra planilhas de referência preenchidas por um modelo mais forte
+(Claude Fable 5.1), com as respostas conferidas pelo time:
 
-| Campo | Acurácia | F1 macro |
+| Amostra | Concordância (3 classes) | Concordância (6 etapas) |
 |---|---|---|
-| Disciplina | 0,630 | 0,489 |
-| Tipo de documento | 0,926 | 0,481 |
-| Área | 0,481 | 0,248 |
+| 60 documentos (usados para refinar os critérios v1 -> v2) | 98,3% | 98,3% |
+| 30 documentos novos (hold-out, nunca vistos pelos critérios) | 93,3% | 86,7% |
 
-### Disciplina
-| Classe | Precisão | Recall | F1 | Amostras no teste |
+O número do hold-out é o teto do campo área: o modelo não pode ser melhor que o rótulo que aprende.
+Nesta rodada a rotulagem rodou no Groq (modelos `gpt-oss-120b`, `qwen3.8-27b` e `gpt-oss-20b`, com
+cadeia de fallback por limite de requisições) para destravar o treino; os documentos são públicos.
+A rodada final para o cliente será refeita com Ollama em máquina do time, e a concordância medida de novo.
+
+### Método
+- Pré-processamento igual ao das tentativas anteriores (minúsculas, pontuação, stopwords, lematização).
+- Entrada: TF-IDF de unigramas e bigramas, `min_df=2`, 20.000 termos, `sublinear_tf`. Os vetores são
+  gravados no MongoDB (coleção `document_vectors`, um registro por texto com a versão do vetorizador) e o
+  treino lê de lá; a mesma coleção receberá os embeddings densos do RAG.
+- Divisão única por grupo, estratificada por disciplina: 361 treino, 91 validação, 113 teste (`random_state=42`).
+- Modelo B: rede PyTorch em CPU, camada compartilhada de 256 neurônios (ReLU, dropout 0,3) e três saídas
+  softmax; perda = soma das três cross-entropies com pesos de classe balanceados; Adam; parada antecipada
+  pela média do F1 macro de validação (paciência 15).
+- Linha de base A: regressão logística por campo com `class_weight="balanced"`, sobre o mesmo TF-IDF.
+- Critério de decisão: média simples do F1 macro dos três campos no teste; os três F1 são reportados.
+
+### Hiperparâmetros
+Grade pequena, um ajuste por vez a partir do padrão, avaliada só na validação (o teste não foi olhado):
+
+| Configuração | Disciplina | Tipo | Área | Média (validação) |
 |---|---|---|---|---|
-| ELE | 1,000 | 0,400 | 0,571 | 5 |
-| ENS | 1,000 | 0,333 | 0,500 | 3 |
-| EST | 1,000 | 0,500 | 0,667 | 4 |
-| HID | 0,000 | 0,000 | 0,000 | 3 |
-| MAT | 0,545 | 1,000 | 0,706 | 12 |
+| padrão (dropout 0,3, weight decay 1e-4) | 0,924 | 0,822 | 0,803 | 0,850 |
+| weight decay 1e-5 | 0,924 | 0,748 | 0,803 | 0,825 |
+| **weight decay 1e-3** | 0,934 | 0,914 | 0,795 | **0,881** |
+| dropout 0,2 | 0,924 | 0,822 | 0,803 | 0,850 |
+| dropout 0,5 | 0,936 | 0,822 | 0,795 | 0,851 |
+| filtro de tokens de OCR (ex.: "20z") | 0,897 | 0,768 | 0,795 | 0,820 |
 
-### Tipo de documento
-| Classe | Precisão | Recall | F1 | Amostras no teste |
+Adotado: `weight_decay=1e-3`. O filtro de tokens piorou e ficou desligado.
+
+### Resultados no teste (113 documentos)
+
+| Campo | A: regressão logística | B: rede única (ajustada) | B padrão |
+|---|---|---|---|
+| Disciplina | 0,916 | **0,949** | 0,939 |
+| Tipo | 0,750 | **0,800** | 0,744 |
+| Área | **0,811** | 0,770 | 0,799 |
+| **Média** | 0,826 | **0,840** | 0,827 |
+
+Por classe, rede única ajustada (precisão / recall / F1 / amostras):
+
+| Classe | P | R | F1 | n |
 |---|---|---|---|---|
-| ESP | 0,926 | 1,000 | 0,962 | 25 |
-| NOR | 0,000 | 0,000 | 0,000 | 2 |
+| ELECTRICAL | 0,929 | 1,000 | 0,963 | 26 |
+| MATERIALS (disciplina) | 0,952 | 0,909 | 0,930 | 44 |
+| MECHANICAL | 0,953 | 0,953 | 0,953 | 43 |
+| COMMERCIAL_ITEM | 1,000 | 0,882 | 0,938 | 17 |
+| HANDBOOK | 0,778 | 0,538 | 0,636 | 13 |
+| SPECIFICATION | 0,937 | 0,987 | 0,961 | 75 |
+| STANDARD | 0,600 | 0,750 | 0,667 | 8 |
+| DESIGN | 0,873 | 0,859 | 0,866 | 64 |
+| MATERIALS (área) | 0,921 | 0,921 | 0,921 | 38 |
+| OTHER_STAGE | 0,500 | 0,545 | 0,522 | 11 |
 
-### Área
-| Classe | Precisão | Recall | F1 | Amostras no teste |
-|---|---|---|---|---|
-| CER | 0,000 | 0,000 | 0,000 | 1 |
-| EST | 0,333 | 0,250 | 0,286 | 4 |
-| MFG | 0,500 | 0,909 | 0,645 | 11 |
-| QUA | 0,000 | 0,000 | 0,000 | 2 |
-| SIS | 0,500 | 0,222 | 0,308 | 9 |
+### Interpretação
+- **Disciplina** é o campo mais fácil: vocabulário de cada classe é distinto. Nenhum documento elétrico errou.
+- **Tipo:** HANDBOOK e STANDARD se confundem entre si (4 handbooks previstos como standard), porque os dois
+  têm linguagem de orientação e não de requisito. SPECIFICATION e COMMERCIAL_ITEM vão bem.
+- **Área:** OTHER_STAGE, com 11 exemplos no teste, é a classe que puxa a média para baixo; mistura quatro
+  etapas diferentes e o rótulo tem teto de 93%. A regressão logística acerta mais nela, e a diferença
+  (0,811 contra 0,770) cabe em 2 ou 3 documentos.
+- O teste é pequeno: um documento muda o F1 de HANDBOOK, STANDARD ou OTHER_STAGE em vários pontos.
+  A decisão pela rede única se apoia na média, que a favorece em 1,4 ponto.
 
-## Interpretação
-- **Disciplina:** o modelo tende à classe majoritária (MAT). Quando prevê outra classe, acerta, mas
-  deixa de reconhecer a maioria dos casos delas.
-- **Tipo de documento:** a acurácia de 92,6% é enganosa. O modelo prevê ESP em todos os casos, e
-  ESP já representa 92% dos documentos. O F1 macro (0,481) mostra que a classe NOR não é reconhecida.
-- **Área:** o desempenho é o mais fraco. SIS foi confundida com MFG em 7 dos 9 casos.
-- O conjunto de teste é muito pequeno (27 documentos, de 1 a 5 por classe minoritária). Um único erro
-  muda o recall dessas classes em 20 a 100 pontos percentuais, então os números são indicativos.
+### Embedding
+O professor pediu o uso de embeddings. O plano prevê uma variante C (rede única sobre embedding
+pré-treinado `bge-small-en-v1.5`, congelado, média por trechos), a ser adotada só se superar a rede
+com TF-IDF nos mesmos dados. Essa variante ainda não foi executada; o TF-IDF foi entregue primeiro por
+ser o conteúdo visto em aula e não exigir dependência nova. A infraestrutura do Mongo já prevê o campo
+do embedding denso.
 
-## Limitação da tentativa 1: falta de um acervo consolidado
-A qualidade dos dados compromete o resultado:
-1. **Volume insuficiente:** cerca de 130 documentos para até 21 classes, quando o planejado eram
-   cerca de 40 exemplos por classe.
-2. **Classes desbalanceadas e ausentes:** várias classes do catálogo não têm nenhum exemplo.
-3. **Rótulos sem validação humana:** foram inferidos por um modelo de linguagem, sem especialista
-   para conferir.
-4. **Sem acervo de referência:** não há uma coleção consolidada de documentos já classificados pela
-   organização, que seria a base correta para treinar e avaliar o modelo.
+### Artefatos e comandos
+Modelo salvo em `backend/classifier_artifacts/` (`model.pt`, `vectorizer.joblib`, `metadata.json` com
+versões, hash do dataset, divisão, hiperparâmetros e métricas). Os comandos de coleta, rotulagem,
+vetorização, ajuste, comparação e treino estão no `backend/README.md`.
 
-## Tentativa 2: nova coleta pelo ASSIST QuickSearch (208 documentos)
-O ASSIST QuickSearch é a base pública do Departamento de Defesa dos EUA com especificações e normas
-militares. Em vez de rotular com um modelo de linguagem, usamos os metadados do site:
-- **Tipo de documento:** a categoria do documento (Doc Category), por exemplo Detail Specification.
-- **Disciplina:** o grupo FSC (Federal Supply Class, os 2 primeiros dígitos), por exemplo FSC16 para
-  componentes de aeronave. Os rótulos viram `FSC16`, `FSC59` etc.
-- **Área:** o órgão que preparou o documento (Preparing Activity), agrupado em NAVY, ARMY, DLA, GSA e AIR_FORCE.
+## Histórico das tentativas anteriores
 
-Isso dá rótulos objetivos, reproduzíveis e sem custo de API. A limitação é que as classes passam a ser as
-do QuickSearch, e não as do catálogo do projeto.
+| Tentativa | Documentos | Classes (disc./tipo/área) | F1 macro: disciplina / tipo / área |
+|---|---|---|---|
+| 1. Base inicial, rótulos por modelo de linguagem | 133 | 5 / 2 / 5 | 0,489 / 0,481 / 0,248 |
+| 2a. QuickSearch, metadados como rótulo | 208 | 8 / 7 / 5 | 0,500 / 0,281 / 0,436 |
+| 2b. Idem, com balanceamento de classes | 208 | 8 / 7 / 5 | 0,781 / 0,433 / 0,620 |
+| 3. Amostra ampliada | 478 | 10 / 7 / 5 | 0,832 / 0,723 / 0,691 |
+| 4. Rede única, classes reduzidas, área por IA | 565 | 3 / 4 / 3 | 0,949 / 0,800 / 0,770 |
 
-**Coleta (scripts em `backend/scripts/dataset/`):** listagem de 27.957 documentos ativos; busca da página
-de detalhes de uma amostra de 599 documentos (60 por grupo FSC); download dos PDFs com Distribution
-Statement A (liberados ao público). Só 298 dos 599 têm PDF público: a outra metade são normas de terceiros
-(ASTM, SAE, ISO). Depois de descartar 90 PDFs com pouco texto, sobraram 208 documentos.
+Na tentativa 1 o gargalo era volume e qualidade de rótulo. As tentativas 2 e 3 trocaram os rótulos pelos
+metadados do QuickSearch (objetivos e reproduzíveis), mas a área media o órgão preparador, não a etapa de
+manufatura. A tentativa 4 redefine a área como etapa de manufatura, reduz as classes e troca os três modelos
+por uma rede única. Os números não são comparáveis entre tentativas porque as classes mudaram.
 
-**Problemas encontrados e resolvidos:** o filtro "Ativo" se perdia a partir da página 2 da busca; o leitor
-de PDF falhava em 86 arquivos antigos (resolvido extraindo página a página); a escolha da revisão correta
-do documento foi corrigida para "a mais recente que não seja aviso".
-
-### Resultados com 208 documentos (teste de 42 documentos)
-| Campo | Acurácia | F1 macro |
-|---|---|---|
-| Disciplina (8 classes) | 0,643 | 0,500 |
-| Tipo (7 classes) | 0,571 | 0,281 |
-| Área (5 classes) | 0,738 | 0,436 |
-
-O modelo tendia às classes maiores: classes pequenas (Handbook, Military Standard, Air Force) ficavam com F1 zero.
-
-### Ajuste: balanceamento de pesos de classe
-Uma linha de configuração na regressão logística (`class_weight="balanced"`) faz um erro numa classe pequena
-custar mais no treino. Mesmos 208 documentos:
-
-| Campo | Acurácia | F1 macro |
-|---|---|---|
-| Disciplina | 0,810 | 0,781 |
-| Tipo | 0,643 | 0,433 |
-| Área | 0,762 | 0,620 |
-
-O ganho foi grande, principalmente nas classes minoritárias.
-
-### Experimento descartado: remover grupos FSC pequenos
-Para tirar a classe `OTHER` de disciplina, descartamos os documentos dos grupos pequenos. Isso reduziu a base
-para 168 documentos e piorou a área (F1 0,496), porque cada documento serve aos três campos. Não foi adotado.
-
-## Tentativa 3: amostra ampliada (478 documentos)
-Restringimos a amostra a normas do governo (prefixos MIL-, A-A- e federais), que têm 77% a 100% de PDF
-público, contra 0% das normas de terceiros. Foram buscados 954 documentos, dos quais 637 têm PDF público;
-478 viraram linhas utilizáveis depois de descartar 159 com pouco texto.
-
-| Campo | Distribuição dos documentos |
-|---|---|
-| Disciplina | FSC16 59, FSC91 58, FSC47 52, FSC61 51, FSC80 49, FSC53 48, FSC31 46, FSC59 45, FSC68 42, FSC95 28 |
-| Tipo | DETAIL_SPEC 210, CID 86, FEDERAL_SPEC 61, PERFORMANCE_SPEC 59, MILITARY_STD 31, HANDBOOK 25, OTHER 6 |
-| Área | NAVY 185, DLA 141, ARMY 107, AIR_FORCE 35, OTHER 10 |
-
-### Resultados com 478 documentos (treino de 382, teste de 96)
-| Campo | Acurácia | F1 macro |
-|---|---|---|
-| Disciplina (10 classes) | 0,823 | 0,832 |
-| Tipo (7 classes) | 0,750 | 0,723 |
-| Área (5 classes) | 0,740 | 0,691 |
-
-- **Disciplina:** todas as classes têm F1 acima de 0,68; FSC59 acerta tudo. FSC91 e FSC16 se confundem.
-- **Tipo:** CID tem F1 de 0,97. O erro principal é Detail Specification confundida com Performance Specification.
-  Handbook e Military Standard, com 5 e 6 exemplos no teste, ficam perto de 0,45 a 0,50.
-- **Área:** DLA vai bem (F1 0,87). Exército é o mais difícil (8 de 22 foram previstos como Marinha), provavelmente
-  porque as capas citam comandos parecidos.
-
-## Comparação das tentativas
-| Tentativa | Documentos | F1 macro: disciplina / tipo / área |
-|---|---|---|
-| 1. Base inicial (rótulos por modelo de linguagem) | 133 | 0,489 / 0,481 / 0,248 |
-| 2a. QuickSearch, sem balanceamento | 208 | 0,500 / 0,281 / 0,436 |
-| 2b. QuickSearch, com balanceamento | 208 | 0,781 / 0,433 / 0,620 |
-| 3. Amostra ampliada, com balanceamento | 478 | 0,832 / 0,723 / 0,691 |
-
-As comparações têm ressalvas: o conjunto de classes mudou entre as tentativas (na 1, tipo tinha 2 classes; nas
-demais, 7), e o conjunto de teste também. O ganho vem de três fatores combinados: rótulos objetivos, mais dados
-e balanceamento de classes.
-
-## Conclusão atualizada
-- A hipótese da primeira tentativa se confirmou: volume e qualidade dos rótulos eram o gargalo. Com rótulos dos
-  metadados e 478 documentos, o desempenho passou de insuficiente para razoável.
-- O resultado ainda mede a capacidade de reproduzir as categorias do QuickSearch, não do catálogo da organização.
-  Um acervo próprio, já classificado por especialistas, continua sendo a base correta para o uso real.
-- O conjunto de teste tem de 1 a 12 documentos por classe. As métricas por classe oscilam, e uma validação
-  cruzada daria números mais confiáveis.
-
-## Próximos passos
-- Salvar os três modelos treinados (joblib) com um arquivo de metadados e criar a função de predição.
-- Fazer validação cruzada para obter intervalos de confiança das métricas.
-- Mapear as classes do QuickSearch para o catálogo da organização, ou substituir o dataset por um acervo próprio
-  classificado, se existir.
-- Integrar ao endpoint de sugestões, passando o texto bruto do documento ao modelo.
+## Limitações e próximos passos
+- O resultado mede a capacidade de reproduzir rótulos do QuickSearch e de uma IA rotuladora; um acervo da
+  organização, classificado por especialistas, continua sendo a base correta para o uso real.
+- Refazer a rotulagem de área com Ollama em máquina do time e repetir a comparação (números finais).
+- Executar a variante C com embedding e decidir pelo critério já definido.
+- Integrar o modelo ao endpoint de sugestões, passando o texto bruto do documento.
