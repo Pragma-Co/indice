@@ -1,5 +1,3 @@
-
-
 <div align="center">
 
   <h2>Índice</h2>
@@ -113,6 +111,14 @@ To eliminate manual bottlenecks and mitigate compliance risks, our team is devel
     <img src="https://skillicons.dev/icons?i=python,django,postgres,mongodb,vue,typescript,git,github,githubactions,figma,vscode,docker&theme=light" alt="Tecnologias utilizadas" />
   </a>
 </p>
+
+---
+
+<br>
+
+## System Diagram
+
+<img width="100%" height="auto" alt="overview" src="https://github.com/user-attachments/assets/6ef6f61b-5ec2-407c-9fd0-f381d477a2d1" />
 
 ---
 
