@@ -94,8 +94,8 @@ To eliminate manual bottlenecks and mitigate compliance risks, our team is devel
 
 | Sprint | Period | Sprint Documentation | Delivered Increment YouTube Video |
 | :---: | :---: | :--- | :--- |
-| **Sprint 1** | 07/09 - 27/09 | [Sprint 1 Documentation](./documentation/process/sprints/sprint-1/README.md) | [YouTube](https://youtu.be/qD55PL15F-Q?si=rTZ3A-46B-5zZydX) |
-| **Sprint 2** | 05/10 - 25/10 | [Sprint 2 Documentation](./documentation/process/sprints/sprint-2/README.md) | _Soon_ |
+| **Sprint 1** | 07/09 - 27/09 | [Sprint 1 Documentation](./documentation/process/sprints/sprint-1/README.md) | [YouTube](https://youtu.be/aVUMzzObDG0) |
+| **Sprint 2** | 05/10 - 25/10 | [Sprint 2 Documentation](./documentation/process/sprints/sprint-2/README.md) | [YouTube](https://youtu.be/cttGirOm9I8) |
 | **Sprint 3** | 02/11 - 22/11 | [Sprint 3 Documentation](./documentation/process/sprints/sprint-3/README.md) | _Soon_ |
 
 <!-- TODO: trocar "Em breve" por [YouTube](URL) conforme os vídeos forem publicados -->
