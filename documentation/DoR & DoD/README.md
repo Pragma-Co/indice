@@ -1,5 +1,4 @@
-<div align="center">
-  <img src="../../assets/header%20docs.png" alt="Header Docs">
+<img src="../../assets/header%20docs.png" alt="Header Docs">
 </div>
 
 ##
@@ -8,27 +7,25 @@
 
 ### DoR - Definition of Ready
 A User Story/Task enters development only when it has:
-* Acceptance criteria defined and agreed upon by the team
-* Subtasks broken down from the User Story
-* Approved design (Figma / wireframe)
-* Database modeling completed (when involving new data, pivot tables, etc.)
-* Clear and documented business rules (including model and protocol definitions where applicable using tags)
-* No pending dependencies or blocks
+- Acceptance criteria defined and agreed upon by the team
+- Subtasks broken down from the User Story
+- Approved design (Figma / wireframe)
+- Database modeling completed (when involving new data, pivot tables, etc.)
+- Clear and documented business rules (including model and protocol definitions where applicable using tags)
+- No pending dependencies or blocks
 
 ### DoD - Definition of Done
 A Task/User Story is considered completed only when:
-* All acceptance criteria have been met
-* Code is complete and functional
-* Unit tests implemented and passing
-* Code review approved
-* Merged and tested in the staging branch
-* No critical errors or inconsistent behavior
-* Documentation updated: User Manual, Application Manual, API Documentation (Recorded delivery video)
-
+- All acceptance criteria have been met
+- Code is complete and functional
+- Unit tests implemented and passing
+- Code review approved
+- Merged and tested in the staging branch
+- No critical errors or inconsistent behavior
+- Documentation updated: User Manual, Application Manual, API Documentation (Recorded delivery video)
 
 --- 
 <br>
-
 
 # Sprint Planning
 
@@ -145,7 +142,7 @@ A Task/User Story is considered completed only when:
 
 | Client Definitions                                                                                                  |
 |---------------------------------------------------------------------------------------------------------------------|
-| The visualization must support the main file formats provided by collaborators.                                   |
+| The visualization must support the main file formats provided by collaborators.                                     |
 
 ---
 
@@ -181,7 +178,121 @@ A Task/User Story is considered completed only when:
 
 <details>
 <summary>Sprint 2</summary>
-default
+
+## Sprint User Stories
+
+| Rank | Priority | ID | User Story | Estimate | Sprint | Partner Requirement |
+|------|----------|----|------------|----------|--------|---------------------|
+| 6 | MEDIUM | US-6 | As a technical manager, I want to access document uploads and access requests to ensure the integrity, security, and standardization of the collection. | - | 2 | RF2, RF3 |
+
+### Requirements
+- Centralized access for technical managers to moderate new revision submissions, pending uploads, and requests for access to restricted documents.
+- Ensuring standardization, compliance, and integrity of the technical collection through formal validation.
+
+### Definition of ready: 
+- User story clearly defined, including acceptance criteria.
+- Tasks defined, assigned, and related to User Stories.
+- The user story has been properly estimated and prioritized in the sprint.
+
+### Definition of done: 
+- Functional and organized code, made available on GitHub.
+- The functionality was reviewed by at least one team member (code review).
+- Code approved after passing all testing steps described in the Test Documentation.
+- Project documentation has been updated.
+- No critical bugs were identified during testing.
+
+## Business Rules
+
+| Client Definitions                                                                                                  |
+|---------------------------------------------------------------------------------------------------------------------|
+| Approval and moderation of reviews/audits is strictly centralized in the Technical Manager profile of the area; the currently active version remains visible to collaborators while the new revision awaits approval. |
+
+---
+
+| Rank | Priority | ID | User Story | Estimate | Sprint | Partner Requirement |
+|------|----------|----|------------|----------|--------|---------------------|
+| 7 | MEDIUM | US-7 | As a technical manager, I want to view how documents are being uploaded and updated to know if everything is working properly. | - | 2 | RF5 |
+
+### Requirements
+- Tracking and auditing dashboard for the document loading and processing pipeline.
+- Monitoring status of success, processing, or failures in text extraction and classification.
+
+### Definition of ready: 
+- User story clearly defined, including acceptance criteria.
+- Tasks defined, assigned, and related to User Stories.
+- The user story has been properly estimated and prioritized in the sprint.
+
+### Definition of done: 
+- Functional and organized code, made available on GitHub.
+- The functionality was reviewed by at least one team member (code review).
+- Code approved after passing all testing steps described in the Test Documentation.
+- Project documentation has been updated.
+- No critical bugs were identified during testing.
+
+## Business Rules
+
+| Client Definitions                                                                                                  |
+|---------------------------------------------------------------------------------------------------------------------|
+| Transparent technical tracking of the file ingestion pipeline health and area audit logs.                         |
+
+---
+
+| Rank | Priority | ID | User Story | Estimate | Sprint | Partner Requirement |
+|------|----------|----|------------|----------|--------|---------------------|
+| 8 | HIGH | US-8 | As a collaborator, I want to search terms and questions within the content of documents and receive suggestions for excerpts and related documents, to quickly reach what is most relevant. | - | 2 | RF1, RF3 |
+
+### Requirements
+- Multidimensional search indexed by tags and normalized text content.
+- Results interface with highlighted excerpts (snippets).
+
+### Definition of ready: 
+- User story clearly defined, including acceptance criteria.
+- Tasks defined, assigned, and related to User Stories.
+- The user story has been properly estimated and prioritized in the sprint.
+
+### Definition of done: 
+- Functional and organized code, made available on GitHub.
+- The functionality was reviewed by at least one team member (code review).
+- Code approved after passing all testing steps described in the Test Documentation.
+- Project documentation has been updated.
+- No critical bugs were identified during testing.
+
+## Business Rules
+
+| Client Definitions                                                                                                  |
+|---------------------------------------------------------------------------------------------------------------------|
+| Fast free-text search bringing exact excerpts (snippets) with visual marking of the searched terms.                 |
+
+---
+
+| Rank | Priority | ID | User Story | Estimate | Sprint | Partner Requirement |
+|------|----------|----|------------|----------|--------|---------------------|
+| 9 | HIGH | US-9 | As a collaborator, I want to receive a simplified summary on the subject I am researching, using the documents found, to have an initial direction before reading in detail. | - | 2 | RF3 |
+
+### Requirements
+- Integration with language model (LLM) for synthesis and automated reformulation of search results.
+- Display of card with structured summary at the top of the results screen.
+
+### Definition of ready: 
+- User story clearly defined, including acceptance criteria.
+- Tasks defined, assigned, and related to User Stories.
+- The user story has been properly estimated and prioritized in the sprint.
+
+### Definition of done: 
+- Functional and organized code, made available on GitHub.
+- The functionality was reviewed by at least one team member (code review).
+- Code approved after passing all testing steps described in the Test Documentation.
+- Project documentation has been updated.
+- No critical bugs were identified during testing.
+
+## Business Rules
+
+| Client Definitions                                                                                                  |
+|---------------------------------------------------------------------------------------------------------------------|
+| The AI-generated summary serves as preliminary guidance and must contain an explicit visual warning of automated content. |
+
+---
+
 </details>
 
 <details>
